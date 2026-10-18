@@ -1,0 +1,35 @@
+# Let Git detect text files and normalize line endings
+* text=auto
+
+# Source and config files: LF in the repo
+*.ts    text eol=lf
+*.js    text eol=lf
+*.json  text eol=lf
+*.md    text eol=lf
+*.yml   text eol=lf
+*.yaml  text eol=lf
+*.html  text eol=lf
+*.css   text eol=lf
+*.env.example text eol=lf
+
+# Shell scripts and Docker files must stay LF (they fail with CRLF on Linux)
+*.sh        text eol=lf
+Dockerfile  text eol=lf
+Jenkinsfile text eol=lf
+
+# Windows batch files need CRLF
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# Binary files: never modify or diff as text
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.gif   binary
+*.ico   binary
+*.webm  binary
+*.mp4   binary
+*.pdf   binary
+*.xlsx  binary
+*.xls   binary
+*.zip   binary
