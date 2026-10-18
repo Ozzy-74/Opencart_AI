@@ -37,7 +37,7 @@ on:
 jobs:
   test:
     timeout-minutes: 60
-    runs-on: windows-latest
+    runs-on: self-hosted        # was: windows-latest
 
     steps:
       - name: 📥 Checkout Repository
@@ -55,7 +55,7 @@ jobs:
         run: npx playwright install --with-deps
 
       - name: ⚙️ Create .env File
-        run: Copy-Item .env.example .env
+        run: Copy-Item .env.example .env -Force # added -Force
 
       - name: 🧪 Run Playwright Tests
         run: |
