@@ -1,0 +1,19 @@
+node_modules/
+dist/
+
+# secrets
+.env
+
+# generated output
+test-results/
+playwright-report/
+reports/
+allure-results/
+allure-report/
+custom-report/
+
+# tool/agent folders
+.playwright-cli/
+.playwright-mcp/
+.claude/
+.commandcode/
