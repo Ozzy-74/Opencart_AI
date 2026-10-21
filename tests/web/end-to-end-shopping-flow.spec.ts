@@ -63,20 +63,32 @@ test("End-to-End Shopping Flow test @master @regression @web @e2e", async ({
     expect(await accountSuccessPage.getConfirmationHeading()).toContain("Your Account Has Been Created!");
   });
 
-  await test.step("4) verify new customer record in DB", async() =>{
-    const [result] = await executeQuery("SELECT firstname, lastname, email, status, date_added FROM oc_customer WHERE email = ?",[registrationData.email]);
+  await test.step("4) verify new customer record in DB", async () => {
 
-    const rows = result as RowDataPacket[];
-    expect(rows, "Exactly one customer record should exist").toHaveLength(1);
+    if (process.env.WEB_APP_URL?.includes("http://localhost/opencart/upload/")) {
 
-    const customer = rows[0];
-    expect(customer.firstname).toBe(registrationData.firstName);
-    expect(customer.lastname).toBe(registrationData.lastName);
-    expect(customer.email.toLowerCase()).toBe(registrationData.email.toLowerCase());
-    expect(Number(customer.status)).toBe(1); // use 0 if your store requires admin approval
-    expect(customer.date_added).toBeTruthy();
- 
-  })
+        const [result] = await executeQuery(
+            "SELECT firstname, lastname, email, status, date_added FROM oc_customer WHERE email = ?",
+            [registrationData.email]
+        );
+
+        const rows = result as RowDataPacket[];
+
+        expect(rows, "Exactly one customer record should exist").toHaveLength(1);
+
+        const customer = rows[0];
+
+        expect(customer.firstname).toBe(registrationData.firstName);
+        expect(customer.lastname).toBe(registrationData.lastName);
+        expect(customer.email.toLowerCase()).toBe(registrationData.email.toLowerCase());
+        expect(Number(customer.status)).toBe(1);
+        expect(customer.date_added).toBeTruthy();
+
+    } else {
+        console.log("Skipping DB verification: not running against local OpenCart");
+    }
+
+});
 
   await test.step("5) Log out from the application", async () => {
     await homePage.clickLogout();
