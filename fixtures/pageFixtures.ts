@@ -32,7 +32,7 @@ type ApiFixtures ={
 
 export const test = base.extend<PageFixtures & ApiFixtures>({
   homePage: async ({ page }, use) => {
-    await page.goto(APP_URL);
+    await page.goto(APP_URL!);
     await use(new HomePage(page));
   },
   registerPage: async ({ page }, use) => {
